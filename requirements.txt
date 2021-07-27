@@ -1,0 +1,11 @@
+numpy
+scipy
+scikit-learn
+matplotlib
+tqdm
+scikit-image
+av
+timm
+torch >= 1.6.0
+torchvision >= 0.7.0
+git+git://github.com/VLL-HD/FrEIA@4e0c6ab42b26ec6e41b1ee2abb1a8b6562752b00
