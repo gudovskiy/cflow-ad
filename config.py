@@ -13,7 +13,7 @@ def get_args():
     parser.add_argument('-cl', '--class-name', default='none', type=str, metavar='C',
                         help='class name for MVTec/STC (default: none)')
     parser.add_argument('-enc', '--enc-arch', default='wide_resnet50_2', type=str, metavar='A',
-                        help='feature extractor architecture (default: wide_resnet50_2)')
+                        help='feature extractor: wide_resnet50_2/resnet18/mobilenet_v3_large (default: wide_resnet50_2)')
     parser.add_argument('-dec', '--dec-arch', default='freia-cflow', type=str, metavar='A',
                         help='normalizing flow model (default: freia-cflow)')
     parser.add_argument('-pl', '--pool-layers', default=3, type=int, metavar='L',

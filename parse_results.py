@@ -9,20 +9,18 @@ def get_args():
     parser = argparse.ArgumentParser(description='CFLOW-AD')
     parser.add_argument('--dataset', default='mvtec', type=str, metavar='D',
                         help='dataset name: mvtec/stc/video (default: mvtec)')
-    parser.add_argument('-cl', '--class-name', default='none', type=str, metavar='C',
-                        help='class name for MVTec/STC (default: none)')
-    parser.add_argument('-enc', '--enc-arch', default='resnet18', type=str, metavar='A',
-                        help='feature extractor architecture (default: resnet18)')
+    parser.add_argument('-enc', '--enc-arch', default='wide_resnet50_2', type=str, metavar='A',
+                        help='feature extractor: wide_resnet50_2/resnet18/mobilenet_v3_large (default: wide_resnet50_2)')
     parser.add_argument('-dec', '--dec-arch', default='freia-cflow', type=str, metavar='A',
                         help='normalizing flow model (default: freia-cflow)')
-    parser.add_argument('-pl', '--pool-layers', default=2, type=int, metavar='L',
-                        help='number of layers used in NF model (default: 2)')
+    parser.add_argument('-pl', '--pool-layers', default=3, type=int, metavar='L',
+                        help='number of layers used in NF model (default: 3)')
     parser.add_argument('-cb', '--coupling-blocks', default=8, type=int, metavar='L',
                         help='number of layers used in NF model (default: 8)')
     parser.add_argument('-runs', '--run-count', default=4, type=int, metavar='C',
                         help='number of runs (default: 4)')
-    parser.add_argument('-inp', '--input-size', default=256, type=int, metavar='C',
-                        help='image resize dimensions (default: 256)')
+    parser.add_argument('-inp', '--input-size', default=512, type=int, metavar='C',
+                        help='image resize dimensions (default: 512)')
 
     args = parser.parse_args()
     
