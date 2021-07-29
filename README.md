@@ -9,7 +9,7 @@ If you like our [paper](https://arxiv.org/abs/2107.12571) or code, please cite i
 ```
 @article{cflow_ad,
   title={CFLOW-AD: Real-Time Unsupervised Anomaly Detection with Localization via Conditional Normalizing Flows},
-  author={Gudovskiy, Denis and Ishizaka, Shun and Kozuka, Kazuki and Tsukizawa, Sotaro},
+  author={Gudovskiy, Denis and Ishizaka, Shun and Kozuka, Kazuki},
   journal={arXiv:2107.12571},
   year={2021}
 }
