@@ -279,8 +279,6 @@ def train(c):
     elif c.dataset == 'stc':
         train_dataset = StcDataset(c, is_train=True)
         test_dataset  = StcDataset(c, is_train=False)
-    #elif c.dataset == 'video':
-    #    c.data_path = c.video_path
     else:
         raise NotImplementedError('{} is not supported dataset!'.format(c.dataset))
     #
@@ -293,13 +291,16 @@ def train(c):
     det_roc_obs = Score_Observer('DET_AUROC')
     seg_roc_obs = Score_Observer('SEG_AUROC')
     seg_pro_obs = Score_Observer('SEG_AUPRO')
+    if c.action_type == 'norm-test':
+        c.meta_epochs = 1
     for epoch in range(c.meta_epochs):
-        if c.viz:
-            if c.checkpoint:
-                load_weights(encoder, decoders, c.checkpoint)
-        else:
+        if c.action_type == 'norm-test' and c.checkpoint:
+            load_weights(encoder, decoders, c.checkpoint)
+        elif c.action_type == 'norm-train':
             print('Train meta epoch: {}'.format(epoch))
             train_meta_epoch(c, epoch, train_loader, encoder, decoders, optimizer, pool_layers, N)
+        else:
+            raise NotImplementedError('{} is not supported action type!'.format(c.action_type))
         
         #height, width, test_image_list, test_dist, gt_label_list, gt_mask_list = test_meta_fps(
         #    c, epoch, test_loader, encoder, decoders, pool_layers, N)
@@ -315,7 +316,6 @@ def train(c):
             test_norm-= torch.max(test_norm) # normalize likelihoods to (-Inf:0] by subtracting a constant
             test_prob = torch.exp(test_norm) # convert to probs in range [0:1]
             test_mask = test_prob.reshape(-1, height[l], width[l])
-            #print('Prob shape:', test_prob.shape, test_prob.min(), test_prob.max())
             test_mask = test_prob.reshape(-1, height[l], width[l])
             # upsample
             test_map[l] = F.interpolate(test_mask.unsqueeze(1),
@@ -325,17 +325,19 @@ def train(c):
         for l, p in enumerate(pool_layers):
             score_map += test_map[l]
         score_mask = score_map
-        # superpixels
-        super_mask = score_mask.max() - score_mask # /score_mask.max()  # normality score to anomaly score
+        # invert probs to anomaly scores
+        super_mask = score_mask.max() - score_mask
         # calculate detection AUROC
         score_label = np.max(super_mask, axis=(1, 2))
         gt_label = np.asarray(gt_label_list, dtype=np.bool)
         det_roc_auc = roc_auc_score(gt_label, score_label)
-        det_roc_obs.update(100.0*det_roc_auc, epoch)
+        _ = det_roc_obs.update(100.0*det_roc_auc, epoch)
         # calculate segmentation AUROC
         gt_mask = np.squeeze(np.asarray(gt_mask_list, dtype=np.bool), axis=1)
         seg_roc_auc = roc_auc_score(gt_mask.flatten(), super_mask.flatten())
-        seg_roc_obs.update(100.0*seg_roc_auc, epoch)
+        save_best_seg_weights = seg_roc_obs.update(100.0*seg_roc_auc, epoch)
+        if save_best_seg_weights and c.action_type != 'norm-test':
+            save_weights(encoder, decoders, c.model, run_date)  # avoid unnecessary saves
         # calculate segmentation AUPRO
         # from https://github.com/YoungGod/DFR:
         if c.pro:  # and (epoch % 4 == 0):  # AUPRO is expensive to compute
@@ -403,7 +405,9 @@ def train(c):
             fprs_selected = rescale(fprs_selected)  # rescale fpr [0,0.3] -> [0, 1]
             pros_mean_selected = pros_mean[idx]    
             seg_pro_auc = auc(fprs_selected, pros_mean_selected)
-            seg_pro_obs.update(100.0*seg_pro_auc, epoch)
+            _ = seg_pro_obs.update(100.0*seg_pro_auc, epoch)
+    #
+    save_results(det_roc_obs, seg_roc_obs, seg_pro_obs, c.model, c.class_name, run_date)
     # export visualuzations
     if c.viz:
         precision, recall, thresholds = precision_recall_curve(gt_label, score_label)
@@ -422,7 +426,3 @@ def train(c):
         export_scores(c, test_image_list, super_mask, seg_threshold)
         export_test_images(c, test_image_list, gt_mask, super_mask, seg_threshold)
         export_hist(c, gt_mask, super_mask, seg_threshold)
-        #save_weights(encoder, decoders, c.model, run_date)  # avoid unnecessary saves
-    elif c.save_results:
-        save_results(det_roc_obs, seg_roc_obs, seg_pro_obs, c.model, c.class_name, run_date)
-        save_weights(encoder, decoders, c.model, run_date)  # avoid unnecessary saves

@@ -18,9 +18,7 @@ def init_seeds(seed=0):
 
 def main(c):
     # model
-    if c.action_type == 'video-train':
-        c.model = "{}_{}_{}".format(c.enc_arch, c.dec_arch, c.video_path)
-    elif c.action_type == 'norm-train' or c.action_type == 'norm-test':
+    if c.action_type in ['norm-train', 'norm-test']:
         c.model = "{}_{}_{}_pl{}_cb{}_inp{}_run{}_{}".format(
             c.dataset, c.enc_arch, c.dec_arch, c.pool_layers, c.coupling_blocks, c.input_size, c.run_name, c.class_name)
     else:
@@ -81,7 +79,7 @@ def main(c):
     init_seeds(seed=int(time.time()))
     c.device = torch.device("cuda" if c.use_cuda else "cpu")
     # selected function:
-    if c.action_type == 'norm-train':
+    if c.action_type in ['norm-train', 'norm-test']:
         train(c)
     else:
         raise NotImplementedError('{} is not supported action-type!'.format(c.action_type))

@@ -15,11 +15,15 @@ class Score_Observer:
 
     def update(self, score, epoch, print_score=True):
         self.last = score
+        save_weights = False
         if epoch == 0 or score > self.max_score:
             self.max_score = score
             self.max_epoch = epoch
+            save_weights = True
         if print_score:
             self.print_score()
+        
+        return save_weights
 
     def print_score(self):
         print('{:s}: \t last: {:.2f} \t max: {:.2f} \t epoch_max: {:d}'.format(
