@@ -33,9 +33,9 @@ We support [MVTec AD dataset](https://www.mvtec.com/de/unternehmen/forschung/dat
 - ./custom_datasets - contains dataloaders for MVTec and STC
 - ./custom_models - contains pretrained feature extractors
 
-## Running Experiments
+## Training Models
 - Run code by selecting class name, feature extractor, input size, flow model etc.
-- The commands below should reproduce our reference MVTec results:
+- The commands below should reproduce our reference MVTec results using WideResnet-50 extractor:
 ```
 python3 main.py --gpu 0 --pro -inp 512 --dataset mvtec --class-name bottle
 python3 main.py --gpu 0 --pro -inp 256 --dataset mvtec --class-name cable
@@ -52,6 +52,13 @@ python3 main.py --gpu 0 --pro -inp 512 --dataset mvtec --class-name toothbrush
 python3 main.py --gpu 0 --pro -inp 128 --dataset mvtec --class-name transistor
 python3 main.py --gpu 0 --pro -inp 512 --dataset mvtec --class-name wood
 python3 main.py --gpu 0 --pro -inp 512 --dataset mvtec --class-name zipper
+```
+
+## Testing Pretrained Models
+- Download pretrained weights from [Google Drive](https://drive.google.com/drive/folders/1u_DupllCxl1yWvKjf_T6HMPnBoV7cV7o?usp=sharing)
+- The command below should reproduce MVTec results using light-weight MobileNetV3L extractor (AUROC, AUPRO) = (98.38%, 94.72%):
+```
+python3 main.py --gpu 0 --pro -enc mobilenet_v3_large --dataset mvtec --action-type norm-test -inp INPUT --class-name CLASS --checkpoint PATH/FILE.PT
 ```
 
 ## CFLOW-AD Architecture
