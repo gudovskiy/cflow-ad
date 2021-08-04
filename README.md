@@ -1,3 +1,5 @@
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/cflow-ad-real-time-unsupervised-anomaly/anomaly-detection-on-mvtec-ad)](https://paperswithcode.com/sota/anomaly-detection-on-mvtec-ad?p=cflow-ad-real-time-unsupervised-anomaly)
+
 ## CFLOW-AD: Real-Time Unsupervised Anomaly Detection with Localization via Conditional Normalizing Flows
 WACV 2022 preprint:[https://arxiv.org/abs/2107.12571](https://arxiv.org/abs/2107.12571)
 
