@@ -9,11 +9,13 @@ Unsupervised anomaly detection with localization has many practical applications
 ## BibTex Citation
 If you like our [paper](https://arxiv.org/abs/2107.12571) or code, please cite its WACV 2022 preprint using the following BibTex:
 ```
-@article{cflow_ad,
-  title={CFLOW-AD: Real-Time Unsupervised Anomaly Detection with Localization via Conditional Normalizing Flows},
-  author={Gudovskiy, Denis and Ishizaka, Shun and Kozuka, Kazuki},
-  journal={arXiv:2107.12571},
-  year={2021}
+@inproceedings{Gudovskiy_2022_WACV,
+    author    = {Gudovskiy, Denis and Ishizaka, Shun and Kozuka, Kazuki},
+    title     = {{CFLOW-AD}: Real-Time Unsupervised Anomaly Detection With Localization via Conditional Normalizing Flows},
+    booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+    month     = {January},
+    year      = {2022},
+    pages     = {98-107}
 }
 ```
 
