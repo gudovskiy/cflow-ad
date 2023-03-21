@@ -22,7 +22,7 @@ If you like our [paper](https://arxiv.org/abs/2107.12571) or code, please cite i
 ## Installation
 - Clone this repository: tested on Python 3.8
 - Install [PyTorch](http://pytorch.org/): tested on v1.8
-- Install [FrEIA Flows](https://github.com/vislearn/FrEIA): tested on [the recent tag](https://github.com/vislearn/FrEIA/tree/033f6fd6eb4d2ddbc98f746a9ef5f8c619587abe)
+- Install [FrEIA Flows](https://github.com/vislearn/FrEIA): tested on [the recent commit](https://github.com/vislearn/FrEIA/tree/cc5cf5ebee08f9bb762bab5a6535c11d19ccb026)
 - Other dependencies in requirements.txt
 
 Install all packages with this command:
