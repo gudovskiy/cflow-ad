@@ -31,7 +31,7 @@ $ python3 -m pip install -U -r requirements.txt
 ```
 
 ## Datasets
-We support [MVTec AD dataset](https://www.mvtec.com/de/unternehmen/forschung/datasets/mvtec-ad/) for anomaly localization in factory setting and [Shanghai Tech Campus (STC)](https://svip-lab.github.io/dataset/campus_dataset.html) dataset with surveillance camera videos. Please, download dataset from URLs and extract to *data* folder or make symlink to that folder or [change default data path in main.py](https://github.com/gudovskiy/cflow-ad/blob/6a520d5eeb60e7df99a644f31836fb5cf7ffbfde/main.py#L48)).
+We support [MVTec AD dataset](https://www.mvtec.com/company/research/datasets/mvtec-ad/downloads) for anomaly localization in factory setting and [Shanghai Tech Campus (STC)](https://svip-lab.github.io/dataset/campus_dataset.html) dataset with surveillance camera videos. Please, download dataset from URLs and extract to *data* folder or make symlink to that folder or [change default data path in main.py](https://github.com/gudovskiy/cflow-ad/blob/6a520d5eeb60e7df99a644f31836fb5cf7ffbfde/main.py#L48)).
 
 ## Code Organization
 - ./custom_datasets - contains dataloaders for MVTec and STC
